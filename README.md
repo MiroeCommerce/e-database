@@ -1,4 +1,4 @@
-# PostgreSQL + pgAdmin Docker Setup
+# PostgreSQL + pgAdmin Docker Setup + Flyway
 
 This Docker Compose configuration sets up a PostgreSQL database along with pgAdmin for easy management. It is designed to work across all microservices (Java, Python, etc.) within a shared Docker network.
 
