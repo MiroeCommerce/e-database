@@ -52,4 +52,37 @@ docker-compose up -d
 docker-compose down
 
 
+## Flyway - Database Migration Tool
 
+Flyway runs automatically to apply migrations on container startup.
+
+### Migration Folder Structure
+Create migration scripts in the following structure:
+
+```bash
+sql/
+└── migrations/
+    ├── V1__init.sql
+    ├── V2__create_users.sql
+    └── ...
+```
+
+Naming Convention: V<version>__<description>.sql
+
+### Example Script 
+
+```bash
+-- V1__init.sql
+CREATE TABLE IF NOT EXISTS example (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+### Manually Run Flyway
+To re-run migrations manually:
+
+```bash
+docker-compose run --rm flyway
+```
