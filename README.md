@@ -5,7 +5,7 @@ This Docker Compose configuration sets up a PostgreSQL database along with pgAdm
 
 ## Services
 
-### 1. **PostgreSQL**
+### 1. PostgreSQL
 - **Image**: `postgres:latest`
 - **Container Name**: `postgres-db-container`
 - **Platform**: `linux/arm64` (for M1/M2 Mac or ARM64 systems)
