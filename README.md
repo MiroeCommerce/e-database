@@ -6,23 +6,23 @@ This Docker Compose configuration sets up a PostgreSQL database along with pgAdm
 ## Services
 
 ### 1. PostgreSQL
-- **Image**: `postgres:latest`
-- **Container Name**: `postgres-db-container`
-- **Platform**: `linux/arm64` (for M1/M2 Mac or ARM64 systems)
-- **Data Volume**: Persistent storage at `/var/lib/postgresql/data`
+- **Image**: postgres:latest
+- **Container Name**: postgres-db-container
+- **Platform**: linux/arm64 (for M1/M2 Mac or ARM64 systems)
+- **Data Volume**: Persistent storage at /var/lib/postgresql/data
 
 ### 2. **pgAdmin**
-- **Image**: `dpage/pgadmin4:latest`
-- **Container Name**: `pgadmin-server-container`
-- **Platform**: `linux/arm64`
-- **Data Volume**: Persistent storage at `/var/lib/pgadmin`
+- **Image**: dpage/pgadmin4:latest
+- **Container Name**: pgadmin-server-container
+- **Platform**: linux/arm64
+- **Data Volume**: Persistent storage at /var/lib/pgadmin
 - **Access pgAdmin via browser**: [http://localhost:${PGADMIN_PORT}](http://localhost:${PGADMIN_PORT})
 
 
 ## Configuration
 
-### `.env` File (Required)
-Create a `.env` file in the root directory with the following variables:
+### .env File (Required)
+Create a .env file in the root directory with the following variables:
 
 ```env
 # PostgreSQL Settings
