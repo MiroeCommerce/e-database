@@ -1,5 +1,7 @@
+version: "3.9"
+
 services:
-  # --- Database Service ---
+  # --- Main Database ---
   postgres-db:
     image: postgres:latest
     container_name: postgres-db-container
@@ -16,8 +18,24 @@ services:
       - app-network
     restart: always
 
+  # --- Admin Panel Database ---
+  postgres-admin:
+    image: postgres:latest
+    container_name: postgres-admin-container
+    platform: linux/arm64
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_ADMIN}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_ADMIN}
+      POSTGRES_DB: ${POSTGRES_DB_ADMIN}
+    ports:
+      - "${POSTGRES_PORT_ADMIN}:5432"
+    volumes:
+      - postgres_admin_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: always
 
-  # --- Management Tool ---
+  # --- Management Tool (pgAdmin) ---
   pgadmin-server:
     image: dpage/pgadmin4:latest
     container_name: pgadmin-server-container
@@ -33,9 +51,10 @@ services:
       - app-network
     depends_on:
       - postgres-db
+      - postgres-admin
     restart: always
     
-  # --- Flyway Migration Service ---
+  # --- Flyway Migration Service (for main DB) ---
   flyway:
     image: flyway/flyway:latest
     container_name: flyway-migration
@@ -44,15 +63,19 @@ services:
       - postgres-db
     volumes:
       - ./sql/migrations:/flyway/sql
-    command: -url=jdbc:postgresql://postgres-db:5432/${POSTGRES_DB} -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} migrate
+    command: >
+      -url=jdbc:postgresql://postgres-db:5432/${POSTGRES_DB}
+      -user=${FLYWAY_USER}
+      -password=${FLYWAY_PASSWORD}
+      migrate
     networks:
       - app-network
 
 volumes:
   postgres_data:
+  postgres_admin_data:
   pgadmin_data:
 
 networks:
   app-network:
     driver: bridge
-
