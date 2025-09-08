@@ -5,7 +5,7 @@ services:
   postgres-db:
     image: ankane/pgvector:latest
     container_name: postgres-db-container
-    platform: linux/arm64
+    platform: linux/amd64
     environment:
       POSTGRES_USER: ${POSTGRES_USER_MAIN}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_MAIN}
@@ -23,7 +23,7 @@ services:
   postgres-admin:
     image: ankane/pgvector:latest
     container_name: postgres-admin-container
-    platform: linux/arm64
+    platform: linux/amd64
     environment:
       POSTGRES_USER: ${POSTGRES_USER_ADMIN}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_ADMIN}
@@ -41,7 +41,7 @@ services:
   pgadmin-server:
     image: dpage/pgadmin4:latest
     container_name: pgadmin-server-container
-    platform: linux/arm64
+    platform: linux/amd64
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
@@ -61,7 +61,7 @@ services:
   flyway:
     image: flyway/flyway:latest
     container_name: flyway-migration
-    platform: linux/arm64
+    platform: linux/amd64
     depends_on:
       - postgres-db
     volumes:
