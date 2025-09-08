@@ -1,0 +1,8 @@
+CREATE TABLE loyalty_badge_assignments (
+    id SERIAL PRIMARY KEY,
+    badge_id INTEGER NOT NULL REFERENCES loyalty_badges(id) ON DELETE CASCADE,
+    member_id INTEGER NOT NULL REFERENCES loyalty_members(id) ON DELETE CASCADE,
+    assigned_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
