@@ -4,11 +4,11 @@ import requests
 from datetime import datetime
 
 # === CONFIGURATION ===
-BASE_URL = "https://{confluence.site}.atlassian.net/wiki/rest/api"
+BASE_URL = "https://ecommercedev.atlassian.net/wiki/rest/api"
 USERNAME = "email"
-API_TOKEN = "Confluence API Key" 
-ROOT_PAGE_ID = "1277962"            # Tables page
-OUTPUT_DIR = "./sql"
+API_TOKEN = "Atlassian API Key" 
+ROOT_PAGE_ID = "50462724"            # Tables page
+OUTPUT_DIR = "./sql_admin"
 LOG_FILE = "./confluence_sql_export.log"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)

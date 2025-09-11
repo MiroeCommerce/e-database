@@ -1,6 +1,0 @@
-CREATE TABLE ai_user_embeddings (
-    user_id BIGINT PRIMARY KEY,
-    embedding VECTOR,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);

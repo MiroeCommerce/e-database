@@ -14,7 +14,7 @@ services:
       - "${POSTGRES_PORT_MAIN}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./init-scripts/main:/docker-entrypoint-initdb.d   # <--- added
+      - ./init-scripts/main:/docker-entrypoint-initdb.d # <--- added
     networks:
       - app-network
     restart: always
@@ -32,7 +32,7 @@ services:
       - "${POSTGRES_PORT_ADMIN}:5432"
     volumes:
       - postgres_admin_data:/var/lib/postgresql/data
-      - ./init-scripts/admin:/docker-entrypoint-initdb.d   # <--- added
+      - ./init-scripts/admin:/docker-entrypoint-initdb.d # <--- added
     networks:
       - app-network
     restart: always
@@ -56,11 +56,11 @@ services:
       - postgres-db
       - postgres-admin
     restart: always
-    
+
   # --- Flyway ---
   flyway:
     image: flyway/flyway:latest
-    container_name: flyway-migration
+    container_name: flyway-migration-e-db
     platform: linux/arm64
     depends_on:
       - postgres-db
@@ -69,6 +69,23 @@ services:
     command: >
       -connectRetries=10
       -url=jdbc:postgresql://postgres-db:5432/${POSTGRES_DB_MAIN}
+      -user=${FLYWAY_USER}
+      -password=${FLYWAY_PASSWORD}
+      migrate
+    networks:
+      - app-network
+
+  flyway2:
+    image: flyway/flyway:latest
+    container_name: flyway-migration-admin
+    platform: linux/arm64
+    depends_on:
+      - postgres-db
+    volumes:
+      - ./confluence_db_download_reference_sql/sql_admin/migrations:/flyway/sql
+    command: >
+      -connectRetries=10
+      -url=jdbc:postgresql://postgres-admin:5432/${POSTGRES_DB_ADMIN}
       -user=${FLYWAY_USER}
       -password=${FLYWAY_PASSWORD}
       migrate
